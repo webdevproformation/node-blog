@@ -71,10 +71,10 @@ router.delete("/:id", (req, resp) => {
     return resp.status(400).send(`${id} invalid`);
   }
 
-  Article.findByIdAndRemove(verifId)
+  Article.findByIdAndRemove(id)
     .then(result => {
-      if (!result) return resp.status(404).send([]);
-      return resp.send(result);
+      if (!result) return resp.status(404).send({});
+      return resp.send({});
     })
     .catch(error => {
       resp.status(404).send("aucun article avec id" + error);
