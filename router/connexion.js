@@ -18,7 +18,7 @@ const bcrypt = require("bcrypt");
 // credentials
 
 router.post("/", (req, resp) => {
-  //req.body.login; // contient
+  //req.body.login; // contient  {"login" : "login7@yahoo.fr" , "mdp" : "azerty"}
 
   // 1 login qui a été envoyé est conforme => existe dans Mongo
 

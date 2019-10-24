@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
 
+
 const articleSchema = new mongoose.Schema({
   title: String,
   contenu: String
