@@ -1,5 +1,4 @@
 const express = require("express");
-const Joi = require("@hapi/joi");
 const router = express.Router();
 const mongoose = require("mongoose");
 const { Article, validationArticle } = require("../model/articles");
@@ -11,6 +10,14 @@ router.get("/", async (req, resp) => {
 
 router.get("/:id", (req, resp) => {
   const id = req.params.id;
+
+  // postman => créer un nouvel article
+  // http://localhost:5000/api/articles
+  // POST
+  // body
+  // { "title" : "article 1" , "contenu" : "un peu de contenu"}
+
+  //
   const verifId = mongoose.Types.ObjectId.isValid(id);
 
   if (!verifId) {
@@ -26,6 +33,8 @@ router.get("/:id", (req, resp) => {
       resp.status(404).send(error.details[0].message);
     });
 });
+
+// { "title" : "ar" , "contenu" : "un peu de contenu"}
 
 router.post("/", (req, resp) => {
   validationArticle(req.body)

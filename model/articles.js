@@ -13,12 +13,24 @@ function validationArticle(article) {
     title: Joi.string()
       .min(3)
       .required(),
-    categorie: Joi.string()
+    contenu: Joi.string()
       .min(3)
       .required()
   };
   const schema = Joi.object(schemaArticleJoi);
   return schema.validateAsync(article);
+
+  // dans la version 15
+
+  /* const schema = {
+  title: Joi.string()
+    .min(3)
+    .required(),
+  contenu: Joi.string()
+    .min(3)
+    .required()
+};
+return Joi.validate(article, schema); */
 }
 
 module.exports.Article = Article;
