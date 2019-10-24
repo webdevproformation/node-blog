@@ -65,6 +65,8 @@ router.put("/:id", (req, resp) => {
       Article.findById(id).then(article => {
         if (!article) return resp.status(404).send([]);
         article.title = req.body.title;
+        // attention ça manque
+        article.contenu = req.body.contenu;
         article.save().then(result => {
           resp.send(result);
         });
