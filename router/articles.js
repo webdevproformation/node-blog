@@ -3,7 +3,6 @@ const Joi = require("@hapi/joi");
 const router = express.Router();
 const mongoose = require("mongoose");
 const { Article, validationArticle } = require("../model/articles");
-const { Categorie, validationCategorie } = require("../model/categories");
 
 router.get("/", async (req, resp) => {
   const result = await Article.find();
@@ -33,7 +32,7 @@ router.post("/", (req, resp) => {
     .then(() => {
       const newArticle = new Article({
         title: req.body.title,
-        categorie: new Categorie("test")
+        contenu: req.body.contenu
       });
       newArticle.save().then(result => {
         resp.send(result);

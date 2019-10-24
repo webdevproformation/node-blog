@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
-const { categorieSchema } = "./categories";
 
 const articleSchema = new mongoose.Schema({
   title: String,
-  categorie: categorieSchema
+  contenu: String
 });
 
 const Article = mongoose.model("articles", articleSchema);
@@ -14,7 +13,9 @@ function validationArticle(article) {
     title: Joi.string()
       .min(3)
       .required(),
-    categorie: Joi.string().required()
+    categorie: Joi.string()
+      .min(3)
+      .required()
   };
   const schema = Joi.object(schemaArticleJoi);
   return schema.validateAsync(article);
