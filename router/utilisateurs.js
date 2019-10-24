@@ -1,9 +1,11 @@
-const { validation } = require("../model/utilisateurs");
+const { validation, Utilisateur } = require("../model/utilisateurs");
 const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, resp) => {
-  resp.send("tous les utilisateurs = admin / rédacteur ...");
+  Utilisateur.find().then(result => {
+    resp.send(result);
+  });
 });
 
 // Postman
@@ -23,7 +25,15 @@ router.post("/", (req, resp) => {
 
       // la création du profil
 
-      resp.send("nouvel utilisateur créé !");
+      const utilisateur = new Utilisateur({
+        login: req.body.login,
+        mdp: req.body.mdp,
+        role: req.body.role
+      });
+
+      utilisateur.save().then(() => {
+        resp.send("nouvel utilisateur créé !");
+      });
     })
     .catch(error => {
       resp.status(400).send(error.details[0].message);
