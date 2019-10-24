@@ -2,10 +2,16 @@ const { validation, Utilisateur } = require("../model/utilisateurs");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const _ = require("lodash");
 
 router.get("/", (req, resp) => {
   Utilisateur.find().then(result => {
-    resp.send(result);
+    const resultModif = [];
+    for (let i = 0; i < result.length; i++) {
+      resultModif[i] = _.pick(result[i], ["_id", "login", "role"]);
+    }
+
+    resp.send(resultModif);
   });
 });
 
@@ -48,7 +54,11 @@ router.post("/", (req, resp) => {
             // 7 create mon profil
             utilisateur.save().then(nouveauCompte => {
               // 8 retourner le nouveau compte avec { _id:"foizhfoezhi"}
-              resp.send(nouveauCompte);
+
+              const token = nouveauCompte.generateAuthenToken();
+
+              const result = _.pick(nouveauCompte, ["_id", "role"]);
+              resp.header("x-auth", token).send(result);
             });
           });
         });
